@@ -16,5 +16,5 @@ You can integrate GoogleCloudKit into your Swift projects using Swift Package Ma
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/TaifAldehbash/GoogleCloudKit.git", from: "1.0.0")
+    .package(url: "https://github.com/TaifAldehbash/GoogleCloudKit.git", .branch("main"))
 ]

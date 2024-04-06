@@ -157,4 +157,36 @@ class GoogleAPIManager {
                 }
             }
     }
+    
+    // Function to get number of rows in a spreadsheet
+    func numberOfRowsInSpreadsheet(completion: @escaping (Int?, Int?, Error?) -> Void) {
+        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)?key=\(apiKey)"
+        
+        AF.request(url).responseData { response in
+            switch response.result {
+                case .success(let data):
+                    let json = JSON(data)
+                    
+                    if let sheets = json["sheets"].array {
+                        var totalRows = 0
+                        var totalSheets = sheets.count
+                        for sheet in sheets {
+                            if let data = sheet["data"].array {
+                                for d in data {
+                                    if let rowData = d["rowData"].array {
+                                        totalRows += rowData.count
+                                    }
+                                }
+                            }
+                        }
+                        completion(totalRows, totalSheets, nil)
+                    } else {
+                        completion(nil, nil, NSError(domain: "Invalid response format", code: 0, userInfo: nil))
+                    }
+                case .failure(let error):
+                    completion(nil, nil, error)
+            }
+        }
+    }
+
 }

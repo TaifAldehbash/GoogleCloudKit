@@ -17,12 +17,12 @@ class CloudStorageManager {
         FirebaseApp.configure()
     }
     
-    func uploadImage(_ image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
+    func uploadImage(_ image: UIImage, completion: @escaping (URL?, Error?) -> Void) {
         
         
         // Convert UIImage to Data
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            completion(.failure(CloudStorageError.imageDataConversionFailed))
+            completion(nil, CloudStorageError.imageDataConversionFailed)
             return
         }
         
@@ -33,15 +33,15 @@ class CloudStorageManager {
         // Upload the file to the Firebase Storage bucket
         let uploadTask = imageRef.putData(imageData, metadata: nil) { metadata, error in
             guard let _ = metadata else {
-                completion(.failure(CloudStorageError.uploadFailed))
+                completion(nil, CloudStorageError.uploadFailed)
                 return
             }
             // If the upload is successful, get the download URL
             imageRef.downloadURL { url, error in
                 if let downloadURL = url {
-                    completion(.success(downloadURL))
+                    completion(downloadURL, nil)
                 } else {
-                    completion(.failure(CloudStorageError.downloadURLNotFound))
+                    completion(nil, CloudStorageError.downloadURLNotFound)
                 }
             }
         }

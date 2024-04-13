@@ -10,14 +10,14 @@ import FirebaseCore
 import UIKit
 
 public class CloudStorageManager {
-    static let shared = CloudStorageManager()
+    public static let shared = CloudStorageManager()
     private let storage = Storage.storage()
     
     private init() {
         FirebaseApp.configure()
     }
     
-    func uploadImage(_ image: UIImage, completion: @escaping (URL?, Error?) -> Void) {
+    public func uploadImage(_ image: UIImage, completion: @escaping (URL?, Error?) -> Void) {
         
         
         // Convert UIImage to Data

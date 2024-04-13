@@ -7,7 +7,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class GoogleAPIManager {
+public class GoogleAPIManager {
     static let shared = GoogleAPIManager()
     
     private var spreadsheetId = ProcessInfo.processInfo.environment["SPREADSHEET_ID"] ?? ""

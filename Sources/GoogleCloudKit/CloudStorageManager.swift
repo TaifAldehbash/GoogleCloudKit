@@ -9,7 +9,7 @@ import FirebaseStorage
 import FirebaseCore
 import UIKit
 
-class CloudStorageManager {
+public class CloudStorageManager {
     static let shared = CloudStorageManager()
     private let storage = Storage.storage()
     

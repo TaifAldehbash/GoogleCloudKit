@@ -17,7 +17,7 @@ public class GoogleAPIManager {
     private init() {}
     
     // Method to set OAuth2 access token
-    func setAccessToken(_ token: String) {
+    public func setAccessToken(_ token: String) {
         self.accessToken = token
     }
     

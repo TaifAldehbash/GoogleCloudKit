@@ -11,7 +11,7 @@ public class GoogleAPIManager {
     public static let shared = GoogleAPIManager()
     
     private var spreadsheetId = "1VhyyuTkWc14CVtUatF98atRKVnWXV17GMF0c4HwUo-U"
-    private let apiKey = ProcessInfo.processInfo.environment["GOOGLE_SHEETS_API_KEY"] ?? ""
+    private let apiKey = "AIzaSyBeRmU70AYsAmOZavkj6lXiRAJDLVohJks"
     
     private init() {}
     

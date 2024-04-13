@@ -27,7 +27,7 @@ public class CloudStorageManager {
         }
         
         // Create a reference to the Firebase Storage bucket
-        let storageRef = storage.reference()
+        let storageRef = storage.reference(forURL: "gs://cloudkit-d0a0e.appspot.com")
         let imageRef = storageRef.child("\(UUID().uuidString).jpg")
         
         // Upload the file to the Firebase Storage bucket

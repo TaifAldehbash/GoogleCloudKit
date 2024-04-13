@@ -19,7 +19,14 @@ public class GoogleCloudKit {
     // Private initializer to enforce singleton
     private init() {}
     
-    // Method to initialize GoogleCloudKit.shared with any necessary configuration
-    private static func initialize() {}
+    // Method to initialize CloudStorageManager
+    public static func initializeCloudStorageManager() -> CloudStorageManager {
+        return CloudStorageManager.shared
+    }
+    
+    // Method to initialize GoogleAPIManager
+    public static func initializeGoogleAPIManager() -> GoogleAPIManager {
+        return GoogleAPIManager.shared
+    }
 }
 

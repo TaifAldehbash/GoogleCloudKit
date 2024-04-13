@@ -13,9 +13,7 @@ public class CloudStorageManager {
     public static let shared = CloudStorageManager()
     private let storage = Storage.storage()
     
-    private init() {
-        FirebaseApp.configure()
-    }
+    private init() {}
     
     public func uploadImage(_ image: UIImage, completion: @escaping (URL?, Error?) -> Void) {
         

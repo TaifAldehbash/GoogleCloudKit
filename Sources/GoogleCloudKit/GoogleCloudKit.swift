@@ -10,12 +10,6 @@ public class GoogleCloudKit {
     // Singleton instance
     public static let shared = GoogleCloudKit()
     
-    // Initialize CloudStorageManager
-    let cloudStorageManager = CloudStorageManager.shared
-    
-    // Initialize GoogleAPIManager
-    let googleAPIManager = GoogleAPIManager.shared
-    
     // Private initializer to enforce singleton
     private init() {}
     

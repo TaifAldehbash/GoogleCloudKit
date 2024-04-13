@@ -11,15 +11,20 @@ public class GoogleAPIManager {
     public static let shared = GoogleAPIManager()
     
     private var spreadsheetId = "1VhyyuTkWc14CVtUatF98atRKVnWXV17GMF0c4HwUo-U"
-    private let apiKey = "AIzaSyBeRmU70AYsAmOZavkj6lXiRAJDLVohJks"
+    private let accessToken = "323497672164-ccdpje0jkqeq16ajdgfa7gv0k48p9v3q.apps.googleusercontent.com"
     
     private init() {}
     
     // Function to create a new sheet tab for a given title
     public func createSheetTab(title: String, completion: @escaping (Bool, Error?) -> Void) {
-        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId):batchUpdate?key=\(apiKey)"
+        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId):batchUpdate"
         
         let sheetTitle = title
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(accessToken)"
+        ]
+        
         let requestJSON: [String: Any] = [
             "requests": [
                 [
@@ -32,7 +37,7 @@ public class GoogleAPIManager {
             ]
         ]
         
-        AF.request(url, method: .post, parameters: requestJSON, encoding: JSONEncoding.default)
+        AF.request(url, method: .post, parameters: requestJSON, encoding: JSONEncoding.default, headers: headers)
             .validate(statusCode: 200..<300)
             .response { response in
                 debugPrint(response)
@@ -47,9 +52,13 @@ public class GoogleAPIManager {
     
     // Function to check if a sheet with the specified name exists
     public func checkSheetExists(sheetName: String, completion: @escaping (Bool, Error?) -> Void) {
-    let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)?key=\(apiKey)"
+    let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)"
     
-    AF.request(url).responseData { response in
+    let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(accessToken)"
+        ]
+        
+    AF.request(url, headers: headers).responseData { response in
         switch response.result {
             case .success(let data):
                 let json = JSON(data)
@@ -70,7 +79,11 @@ public class GoogleAPIManager {
     
     // Function to upload data to a specific sheet in Google Sheets
     public func uploadDataToGoogleSheets(sheetName: String, data: [[Any]], completion: @escaping (Bool, Error?) -> Void) {
-        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append?valueInputOption=RAW&key=\(apiKey)"
+        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append?valueInputOption=RAW"
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(accessToken)"
+        ]
         
         let requestData: [String: Any] = [
             "range": "A1",
@@ -78,7 +91,7 @@ public class GoogleAPIManager {
             "values": data
         ]
         
-        AF.request(url, method: .post, parameters: requestData, encoding: JSONEncoding.default)
+        AF.request(url, method: .post, parameters: requestData, encoding: JSONEncoding.default, headers: headers)
             .validate(statusCode: 200..<300)
             .response { response in
                 debugPrint(response)

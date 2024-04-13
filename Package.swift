@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "8.0.0"),
+        .package(url: "http://github.com/firebase/firebaseui-ios", .upToNextMajor(from: "12.0.0")),
         .package(url: "https://github.com/Alamofire/Alamofire.git", branch: "master"),
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", branch: "master")
     ],
@@ -27,6 +28,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseStorage", package: "firebase-ios-sdk"),
+                .product(name: "FirebaseAuthUI", package: "firebaseui-ios"),
                 .product(name: "Alamofire", package: "alamofire"),
                 .product(name: "SwiftyJSON", package: "swiftyjson")
             ]

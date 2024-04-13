@@ -71,11 +71,6 @@
             value = "1VhyyuTkWc14CVtUatF98atRKVnWXV17GMF0c4HwUo-U"
             isEnabled = "YES">
          </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "GOOGLE_SHEETS_API_KEY"
-            value = "AIzaSyBeRmU70AYsAmOZavkj6lXiRAJDLVohJks"
-            isEnabled = "YES">
-         </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction

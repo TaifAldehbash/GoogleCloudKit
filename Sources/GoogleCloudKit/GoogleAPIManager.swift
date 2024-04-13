@@ -10,8 +10,8 @@ import SwiftyJSON
 public class GoogleAPIManager {
     public static let shared = GoogleAPIManager()
     
-    private var spreadsheetId = ProcessInfo.processInfo.environment["SPREADSHEET_ID"] ?? ""
-    private let apiKey = ProcessInfo.processInfo.environment["GOOGLE_SHEETS_API_KEY"] ?? ""
+    private var spreadsheetId = "1VhyyuTkWc14CVtUatF98atRKVnWXV17GMF0c4HwUo-U"
+
     
     private init() {}
     

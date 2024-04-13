@@ -10,14 +10,14 @@ import SwiftyJSON
 public class GoogleAPIManager {
     public static let shared = GoogleAPIManager()
     
-    private var spreadsheetId = ProcessInfo.processInfo.environment["SPREADSHEET_ID"] ?? ""
+    private var spreadsheetId = "1VhyyuTkWc14CVtUatF98atRKVnWXV17GMF0c4HwUo-U"
     private let apiKey = ProcessInfo.processInfo.environment["GOOGLE_SHEETS_API_KEY"] ?? ""
     
     private init() {}
     
     // Function to create a new sheet tab for a given title
     public func createSheetTab(title: String, completion: @escaping (Bool, Error?) -> Void) {
-        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId):batchUpdate"
+        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId):batchUpdate?key=\(apiKey)"
         
         let sheetTitle = title
         let requestJSON: [String: Any] = [
@@ -47,7 +47,7 @@ public class GoogleAPIManager {
     
     // Function to check if a sheet with the specified name exists
     public func checkSheetExists(sheetName: String, completion: @escaping (Bool, Error?) -> Void) {
-    let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)"
+    let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)?key=\(apiKey)"
     
     AF.request(url).responseData { response in
         switch response.result {
@@ -70,7 +70,7 @@ public class GoogleAPIManager {
     
     // Function to upload data to a specific sheet in Google Sheets
     public func uploadDataToGoogleSheets(sheetName: String, data: [[Any]], completion: @escaping (Bool, Error?) -> Void) {
-        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append?valueInputOption=RAW"
+        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append?valueInputOption=RAW&key=\(apiKey)"
         
         let requestData: [String: Any] = [
             "range": "A1",

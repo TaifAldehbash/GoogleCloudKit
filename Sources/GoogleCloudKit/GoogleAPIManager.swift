@@ -102,7 +102,7 @@ public class GoogleAPIManager {
         ]
         
         let requestData: [String: Any] = [
-            "range": "A1",
+            "range": "\(sheetName)!A1",
             "majorDimension": "ROWS",
             "values": data
         ]

@@ -107,7 +107,7 @@ public class GoogleAPIManager {
             "values": data
         ]
         
-        AF.request(url, method: .post, parameters: requestData, headers: headers)
+        AF.request(url, method: .post, parameters: requestData, encoding: JSONEncoding.default, headers: headers)
             .validate(statusCode: 200..<300)
             .response { response in
                 debugPrint(response)

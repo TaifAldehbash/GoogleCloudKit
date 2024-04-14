@@ -37,30 +37,12 @@
       }
     },
     {
-      "identity" : "facebook-ios-sdk",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/facebook/facebook-ios-sdk.git",
-      "state" : {
-        "revision" : "c19607d535864533523d1f437c84035e5fb101cf",
-        "version" : "14.1.0"
-      }
-    },
-    {
       "identity" : "firebase-ios-sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/firebase-ios-sdk.git",
       "state" : {
         "branch" : "main",
         "revision" : "70f7e772316500bba3707023835e6d4756183552"
-      }
-    },
-    {
-      "identity" : "firebaseui-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "http://github.com/firebase/firebaseui-ios",
-      "state" : {
-        "branch" : "main",
-        "revision" : "d5c037c20e3395c888ce67f582e9f7bf4e1c7c55"
       }
     },
     {
@@ -160,15 +142,6 @@
       "state" : {
         "revision" : "540318ecedd63d883069ae7f1ed811a2df00b6ac",
         "version" : "2.4.0"
-      }
-    },
-    {
-      "identity" : "sdwebimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImage.git",
-      "state" : {
-        "revision" : "f6afa0132961d593f07970d84e2d8b588c29ea04",
-        "version" : "5.19.1"
       }
     },
     {

@@ -4,14 +4,18 @@
 //  Created by Taif Al.qahtani on 03/04/2024.
 //
 import Foundation
+import GoogleSignIn
 import Alamofire
 import SwiftyJSON
+import FirebaseCore
+import FirebaseAuth
+import SwiftUI
 
+@available(iOS 13.0, *)
 public class GoogleAPIManager {
     public static let shared = GoogleAPIManager()
     
     private var spreadsheetId = "1VhyyuTkWc14CVtUatF98atRKVnWXV17GMF0c4HwUo-U"
-    private let clientID = "323497672164-ccdpje0jkqeq16ajdgfa7gv0k48p9v3q.apps.googleusercontent.com"
     private var accessToken: String?
     
     private init() {}
@@ -34,7 +38,7 @@ public class GoogleAPIManager {
         let sheetTitle = title
         
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(clientID)"
+            "Authorization": "Bearer \(accessToken!)"
         ]
         
         let requestJSON: [String: Any] = [
@@ -67,7 +71,7 @@ public class GoogleAPIManager {
     let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)"
     
     let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(clientID)"
+            "Authorization": "Bearer \(accessToken!)"
         ]
         
     AF.request(url, headers: headers).responseData { response in
@@ -94,7 +98,7 @@ public class GoogleAPIManager {
         let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append?valueInputOption=RAW"
         
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(clientID)"
+            "Authorization": "Bearer \(accessToken!)"
         ]
         
         let requestData: [String: Any] = [
@@ -115,5 +119,37 @@ public class GoogleAPIManager {
                 }
             }
     }
-
+    
+    // Function to sign user in using GoogleSignIn
+    func signInWithGoogle(completion: @escaping (String?, Error?) -> Void) {
+        // Configure Google sign-in
+        guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return}
+        
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+        
+        GIDSignIn.sharedInstance.configuration = config
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) { authentication, error in
+            if let error = error {
+                completion(nil, error)
+            }
+            guard let user = authentication?.user, let idToken = user.idToken?.tokenString else { return }
+            
+            let accessToken = user.accessToken.tokenString
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+            
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if error != nil {
+                    completion(nil, error)
+                } else {
+                    completion(accessToken, nil)
+                }
+            }
+        }
+    }
+    
 }

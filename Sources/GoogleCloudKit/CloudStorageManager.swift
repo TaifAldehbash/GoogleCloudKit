@@ -30,7 +30,7 @@ public class CloudStorageManager {
         
         // Upload the file to the Firebase Storage bucket
         let uploadTask = imageRef.putData(imageData, metadata: nil) { metadata, error in
-            debugPrint(error!)
+            
             guard let _ = metadata else {
                 completion(nil, CloudStorageError.uploadFailed)
                 return

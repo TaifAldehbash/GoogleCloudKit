@@ -95,14 +95,14 @@ public class GoogleAPIManager {
     
     // Function to upload data to a specific sheet in Google Sheets
     public func uploadDataToGoogleSheets(sheetName: String, data: [[Any]], completion: @escaping (Bool, Error?) -> Void) {
-        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append"
+        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append?valueInputOption=RAW"
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(accessToken!)"
         ]
         
         let requestData: [String: Any] = [
-            "valueInputOption": "RAW",
+            "range": "A1",
             "majorDimension": "ROWS",
             "values": data
         ]

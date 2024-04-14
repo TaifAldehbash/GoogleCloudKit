@@ -95,14 +95,14 @@ public class GoogleAPIManager {
     
     // Function to upload data to a specific sheet in Google Sheets
     public func uploadDataToGoogleSheets(sheetName: String, data: [[Any]], completion: @escaping (Bool, Error?) -> Void) {
-        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append?valueInputOption=RAW"
+        let url = "https://sheets.googleapis.com/v4/spreadsheets/\(spreadsheetId)/values/\(sheetName)!A1:append"
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(accessToken!)"
         ]
         
         let requestData: [String: Any] = [
-            "range": "A1",
+            "valueInputOption": "RAW",
             "majorDimension": "ROWS",
             "values": data
         ]
@@ -136,17 +136,25 @@ public class GoogleAPIManager {
             if let error = error {
                 completion(nil, error)
             }
+            
             guard let user = authentication?.user, let idToken = user.idToken?.tokenString else { return }
             
-            let accessToken = user.accessToken.tokenString
-            
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
-            
-            Auth.auth().signIn(with: credential) { authResult, error in
-                if error != nil {
+            user.addScopes(["https://www.googleapis.com/auth/spreadsheets"], presenting: presentingViewController) { authentication, error in
+                
+                if let error = error {
                     completion(nil, error)
-                } else {
-                    completion(accessToken, nil)
+                }
+                
+                let accessToken = user.accessToken.tokenString
+                
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+                
+                Auth.auth().signIn(with: credential) { authResult, error in
+                    if error != nil {
+                        completion(nil, error)
+                    } else {
+                        completion(accessToken, nil)
+                    }
                 }
             }
         }

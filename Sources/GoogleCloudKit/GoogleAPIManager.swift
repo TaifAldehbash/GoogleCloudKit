@@ -121,7 +121,7 @@ public class GoogleAPIManager {
     }
     
     // Function to sign user in using GoogleSignIn
-    func signInWithGoogle(completion: @escaping (String?, Error?) -> Void) {
+    public func signInWithGoogle(completion: @escaping (String?, Error?) -> Void) {
         // Configure Google sign-in
         guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return}
         
